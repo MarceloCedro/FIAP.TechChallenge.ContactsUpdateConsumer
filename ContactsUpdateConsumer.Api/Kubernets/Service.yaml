@@ -10,7 +10,7 @@ spec:
     - protocol: TCP
       port: 80           # Porta acessada externamente
       targetPort: 3030   # Porta do container
-      nodePort: 30082    # Porta exposta no n� (opcional)
+      nodePort: 30086    # Porta exposta no n� (opcional)
   type: NodePort
 ---
 # Service LoadBalancer: Acesso externo gerenciado (em nuvem)
