@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: contact-update-producer-api-deployment  # Nome do Deployment
+  name: contact-update-consumer-api-deployment  # Nome do Deployment
   annotations:
     autor: Rodrigo Mahlow 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: contact-update-producer-api
+      app: contact-update-consumer-api
   template:
     metadata:
       labels:
-        app: contact-update-producer-api
+        app: contact-update-consumer-api
     spec:
       containers:
-      - name: contact-update-producer-api
+      - name: contact-update-consumer-api
         image: maxcedro/contactsdeleteprod:latest
         ports:
         - containerPort: 3030 
@@ -30,37 +30,37 @@ spec:
         - name: ConnectionStrings__DefaultConnection
           valueFrom:
             secretKeyRef:
-              name: contact-update-producer-api-secrets
+              name: contact-update-consumer-api-secrets
               key: DefaultConnection
         - name: SecretJWT
           valueFrom:
             secretKeyRef:
-              name: contact-update-producer-api-secrets
+              name: contact-update-consumer-api-secrets
               key: SecretJWT
         - name: MassTransit__User
           valueFrom:
             secretKeyRef:
-              name: contact-update-producer-api-secrets
+              name: contact-update-consumer-api-secrets
               key: User
         - name: MassTransit__Password
           valueFrom:
             secretKeyRef:
-              name: contact-update-producer-api-secrets
+              name: contact-update-consumer-api-secrets
               key: Password
         - name: MassTransit__QueueName
           valueFrom:
             configMapKeyRef: 
-              name: "contact-update-producer-api-configmap"
+              name: "contact-update-consumer-api-configmap"
               key: "QueueName"        
         - name: MassTransit__Server
           valueFrom:
             configMapKeyRef: 
-              name: "contact-update-producer-api-configmap"
+              name: "contact-update-consumer-api-configmap"
               key: "Server"
         - name: "Integrations__ContactConsult__BasePath"
           valueFrom:
             configMapKeyRef: 
-              name: "contact-update-producer-api-configmap"
+              name: "contact-update-consumer-api-configmap"
               key: "BasePath"
         
        
