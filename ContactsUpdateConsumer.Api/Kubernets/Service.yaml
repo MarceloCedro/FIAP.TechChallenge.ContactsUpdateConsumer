@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: contact-update-producer-api-nodeport
+  name: contact-update-consumer-api-nodeport
 spec:
   selector:
-    app: contact-update-producer-api
+    app: contact-update-consumer-api
   ports:
     - protocol: TCP
       port: 80           # Porta acessada externamente
@@ -17,10 +17,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: contact-update-producer-api-lb
+  name: contact-update-consumer-api-lb
 spec:
   selector:
-    app: contact-update-producer-api
+    app: contact-update-consumer-api
   ports:
     - protocol: TCP
       port: 5002           # Porta do servi�o
