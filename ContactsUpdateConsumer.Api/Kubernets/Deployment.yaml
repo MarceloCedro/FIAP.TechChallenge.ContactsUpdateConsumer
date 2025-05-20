@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: contact-update-consumer-api-deployment  # Nome do Deployment
+  name: contact-update-consumer-api-deployment
   annotations:
-    autor: Rodrigo Mahlow 
+    autor: Rodrigo Mahlow
 spec:
   replicas: 1
   selector:
@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
       - name: contact-update-consumer-api
-        image: maxcedro/contactsdeleteprod:latest
+        image: maxcedro/contactsupdateconsumer:latest
         ports:
-        - containerPort: 3030 
+        - containerPort: 7070
         resources:
           limits:
             cpu: "0.5"
@@ -49,18 +49,16 @@ spec:
               key: Password
         - name: MassTransit__QueueName
           valueFrom:
-            configMapKeyRef: 
-              name: "contact-update-consumer-api-configmap"
-              key: "QueueName"        
+            configMapKeyRef:
+              name: contact-update-consumer-api-configmap
+              key: QueueName
         - name: MassTransit__Server
           valueFrom:
-            configMapKeyRef: 
-              name: "contact-update-consumer-api-configmap"
-              key: "Server"
-        - name: "Integrations__ContactConsult__BasePath"
+            configMapKeyRef:
+              name: contact-update-consumer-api-configmap
+              key: Server
+        - name: Integrations__ContactConsult__BasePath
           valueFrom:
-            configMapKeyRef: 
-              name: "contact-update-consumer-api-configmap"
-              key: "BasePath"
-        
-       
+            configMapKeyRef:
+              name: contact-update-consumer-api-configmap
+              key: BasePath

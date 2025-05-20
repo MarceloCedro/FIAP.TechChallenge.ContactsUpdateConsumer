@@ -3,14 +3,23 @@ using FIAP.TechChallenge.ContactsUpdateConsumer.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using FIAP.TechChallenge.ContactsUpdateConsumer.Infrastructure.Data;
+using FIAP.TechChallenge.ContactsInsertConsumer.Infrastructure.ElasticSearch;
+using FIAP.TechChallenge.ContactsUpdateConsumer.Domain.Interfaces.ElasticSearch;
+using FIAP.TechChallenge.ContactsUpdateConsumer.Infrastructure.ElasticSearch;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace FIAP.TechChallenge.ContactsUpdateConsumer.Infrastructure
 {
     public static class DatabaseDependency
     {
-        public static IServiceCollection AddRepositoriesDependency(this IServiceCollection service)
+        public static IServiceCollection AddRepositoriesDependency(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddScoped<IContactRepository, ContactRepository>();
+
+            service.Configure<ElasticSettings>(configuration.GetSection("ElasticSettings"));
+            service.AddSingleton<IElasticSettings>(sp => sp.GetRequiredService<IOptions<ElasticSettings>>().Value);
+            service.AddSingleton(typeof(IElasticClient<>), typeof(ElasticClient<>));
 
             return service;
         }

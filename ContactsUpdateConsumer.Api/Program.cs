@@ -22,7 +22,7 @@ IConfiguration configuration = new ConfigurationBuilder().SetBasePath(Directory.
                                                          .AddEnvironmentVariables()
                                                          .Build();
 
-builder.Services.AddDependencyResolver(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddDependencyResolver(builder.Configuration);
 
 builder.Services.AddSingleton<IConfiguration>(configuration);
 
